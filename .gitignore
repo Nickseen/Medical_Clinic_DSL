@@ -1,0 +1,8 @@
+# Игнорировать папку node_modules
+node_modules/
+
+# Игнорировать папку dist (если используется outDir в tsconfig.json)
+dist/
+
+# Игнорировать файлы окружения
+.env

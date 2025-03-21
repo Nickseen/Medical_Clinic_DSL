@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es2015", // Целевая версия JavaScript
+    "lib": ["es2015", "dom"], // Подключение библиотек
+    "module": "commonjs", // Используемый модуль
+    "outDir": "./dist", // Папка для скомпилированных файлов
+    "rootDir": "./src", // Папка с исходным кодом
+    "strict": true, // Включение строгой проверки типов
+    "esModuleInterop": true, // Упрощение работы с CommonJS/ES модулями
+    "skipLibCheck": true, // Пропуск проверки типов в библиотеках
+    "forceConsistentCasingInFileNames": true // Проверка регистра имен файлов
+  },
+  "include": ["src/**/*"], // Включаемые файлы
+  "exclude": ["node_modules"] // Исключаемые файлы
+}
