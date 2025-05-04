@@ -20,7 +20,7 @@ type TokenType =
   | "FREQUENCY" // "1 time per day", "2 times per day"
   | "TIME"; // 10:00
 
-interface Token {
+export interface Token {
   type: TokenType;
   value: string;
 }
@@ -60,37 +60,34 @@ export class Lexer {
 
   private readQuotedString(): { type: TokenType; value: string } {
     let result = '';
-    this.position++; // Skip opening quote
+    this.position++;
     result += this.readWhile((char) => !this.isQuote(char));
-    this.position++; // Skip closing quote
+    this.position++;
 
-    // Проверяем, является ли первый символ цифрой
     if (/^\d/.test(result)) {
-      return { type: "FREQUENCY", value: result }; // Например, "1 time per day"
+      return { type: "FREQUENCY", value: result };
     }
 
-    // Проверяем, есть ли символ '_'
     if (result.includes('_')) {
-      return { type: "PATIENT_NAME", value: result }; // Например, "John_Doe"
+      return { type: "PATIENT_NAME", value: result };
     }
 
-    // Если не FREQUENCY и не PATIENT_NAME, то это DRUG_NAME
-    return { type: "DRUG_NAME", value: result }; // Например, "Paracetamol"
+    return { type: "DRUG_NAME", value: result };
   }
 
   private readBracketedString(): string {
     let result = '';
-    this.position++; // Skip opening bracket
+    this.position++;
     result += this.readWhile((char) => !this.isBracket(char));
-    this.position++; // Skip closing bracket
+    this.position++;
     return result;
   }
 
   private readCurlyBracketedString(): string {
     let result = '';
-    this.position++; // Skip opening curly bracket
+    this.position++;
     result += this.readWhile((char) => !this.isCurlyBracket(char));
-    this.position++; // Skip closing curly bracket
+    this.position++;
     return result;
   }
 
@@ -136,18 +133,18 @@ export class Lexer {
         return "HELPCOMMANDS";
       default:
         if (/^\d+mg$/.test(word)) {
-          return "DOSAGE"; // 500mg
+          return "DOSAGE";
         } else if (/^\d+ times? per day$/.test(word)) {
-          return "FREQUENCY"; // "1 time per day", "2 times per day"
+          return "FREQUENCY";
         } else if (/^\d{2}:\d{2}$/.test(word)) {
-          return "TIME"; // 10:00
+          return "TIME";
         } else {
           throw new Error(`Unknown word: ${word}`);
         }
     }
   }
 
-    public tokenize(): Token[] {
+  public tokenize(): Token[] {
     const tokens: Token[] = [];
 
     while (this.position < this.input.length) {
@@ -177,21 +174,18 @@ export class Lexer {
       }
 
       if (/\d/.test(currentChar)) {
-        // Проверяем, является ли это датой (dd/mm/yyyy)
         if (this.position + 9 < this.input.length && this.input[this.position + 2] === '/' && this.input[this.position + 5] === '/') {
           const value = this.readDate();
           tokens.push({ type: "DATE", value });
           continue;
         }
 
-        // Проверяем, является ли это временем (hh:mm)
         if (this.position + 4 < this.input.length && this.input[this.position + 2] === ':') {
           const value = this.readTime();
           tokens.push({ type: "TIME", value });
           continue;
         }
 
-        // Проверяем, является ли это дозировкой (например, 500mg)
         if (this.position + 2 < this.input.length && this.input[this.position + 1] === 'm' && this.input[this.position + 2] === 'g') {
           const value = this.readDosage();
           tokens.push({ type: "DOSAGE", value });
@@ -199,7 +193,6 @@ export class Lexer {
         }
       }
 
-      // Чтение слова и определение его типа
       const word = this.readWord();
       const type = this.getTokenType(word);
       tokens.push({ type, value: word });
