@@ -1,24 +1,5 @@
 # Medical Clinic DSL System
 
-## Table of Contents
-1. [Introduction](#introduction)
-2. [Project Overview](#project-overview)
-3. [Implementation Details](#implementation-details)
-   - [System Architecture](#system-architecture)
-   - [Lexer (Tokenization)](#lexer-tokenization)
-   - [Parser (Syntactic Analysis)](#parser-syntactic-analysis)
-   - [Abstract Syntax Tree (AST)](#abstract-syntax-tree-ast)
-4. [Usage](#usage)
-   - [Example Input](#example-input)
-   - [Processing Flow](#processing-flow)
-   - [Command Interpretation](#command-interpretation)
-5. [Evaluation](#evaluation)
-   - [Strengths](#strengths)
-   - [Potential Improvements](#potential-improvements)
-6. [Conclusion](#conclusion)
-
----
-
 ## Introduction
 
 This project implements a complete language processing system for a Domain-Specific Language (DSL) designed for managing medical clinic operations. The system processes textual commands into actionable instructions through a three-stage pipeline: lexical analysis (lexer), syntactic analysis (parser), and semantic representation (Abstract Syntax Tree).
